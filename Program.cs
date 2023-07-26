@@ -24,7 +24,7 @@ string [] ReadArrayFromConsole(string stopCombination="%%")
     var line=Console.ReadLine();
     while (line!=stopCombination)
     {
-        if (line==null) line=string.Empty;
+        if (line==null) line=string.Empty; //Спорный момент - в моем случае не бывает Null строк в массиве, но бывают пустые
         result=AddStrElementToArray(result,line);
         line=Console.ReadLine();
     }
@@ -34,7 +34,7 @@ string [] ReadArrayFromConsole(string stopCombination="%%")
 string [] ShortStrings(string []array,int maxLength=3)
 {
     int newLength=0;
-    for (int i=0;i<array.Length;i++)
+    for (int i=0;i<array.Length;i++) //Узнаем размер нового массива
     {
         if (array[i].Length<=maxLength)
         {
@@ -43,20 +43,20 @@ string [] ShortStrings(string []array,int maxLength=3)
     }
     string [] result=new string[newLength]; //Не будет ошибки если массив окажется пустой
     int newIndex=0;
-    for (int i=0;i<array.Length;i++)
+    for (int i=0;i<array.Length;i++) //Создаем новый массив
     {
         if (array[i].Length<=maxLength)
         {
             result[newIndex]=array[i]; //копируем элемент массива
-            newIndex++;
+            newIndex++;ы
         }
     }
     return result;
 }
 
-string[] array=ReadArrayFromConsole();
+string[] array=ReadArrayFromConsole(); //Считываем массив с клавиатуры
 Console.WriteLine("Вы ввели массив строк: ");
 PrintArray(array);
 Console.WriteLine("Мы оставили все элементы длина которых меньше или равно 3 символам: ");
-var newArray=ShortStrings(array);
+var newArray=ShortStrings(array); //Укорачиваем массив
 PrintArray(newArray);
