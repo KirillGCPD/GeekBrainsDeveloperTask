@@ -1,12 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
 //Вывести массив
-void PrintArray (String array)
+void PrintArray (String[] array)
 {
-    for (int i=0;i<array.Length;i++)
-    {
-        Console.WriteLine("["+string.Join(", ",array)+"]");
-    }
+    
+        Console.WriteLine("["+string.Join(";",array)+"]");
+
 }
 //Метод для добавления в массив элемент
 //Не лучший вариант т.к. для таких задач лучше подходят связанные списки
@@ -15,6 +13,7 @@ string [] AddStrElementToArray(string[] array, string strToAdd)
     var result =new string[array.Length+1];
     array.CopyTo(result,0);
     result[array.Length]=strToAdd;
+    return result;
 }
 //Прочитать массив строк с клавиатуры построчно. 
 //stopCombination - комбинация символов для остановки считывания
@@ -25,10 +24,39 @@ string [] ReadArrayFromConsole(string stopCombination="%%")
     var line=Console.ReadLine();
     while (line!=stopCombination)
     {
+        if (line==null) line=string.Empty;
         result=AddStrElementToArray(result,line);
         line=Console.ReadLine();
     }
+    return result;
+}
+//Вернуть массив строк длина которых меньше или равна maxLength по умолчанию 3
+string [] ShortStrings(string []array,int maxLength=3)
+{
+    int newLength=0;
+    for (int i=0;i<array.Length;i++)
+    {
+        if (array[i].Length<=maxLength)
+        {
+            newLength++;
+        }
+    }
+    string [] result=new string[newLength]; //Не будет ошибки если массив окажется пустой
+    int newIndex=0;
+    for (int i=0;i<array.Length;i++)
+    {
+        if (array[i].Length<=maxLength)
+        {
+            result[newIndex]=array[i]; //копируем элемент массива
+            newIndex++;
+        }
+    }
+    return result;
 }
 
-var array=ReadArrayFromConsole();
+string[] array=ReadArrayFromConsole();
+Console.WriteLine("Вы ввели массив строк: ");
 PrintArray(array);
+Console.WriteLine("Мы оставили все элементы длина которых меньше или равно 3 символам: ");
+var newArray=ShortStrings(array);
+PrintArray(newArray);
